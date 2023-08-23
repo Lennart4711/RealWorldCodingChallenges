@@ -1,0 +1,6 @@
+# ignore the .hypothesis folder
+.hypothesis
+# ignore the .pytest_cache folder
+.pytest_cache
+# ignore the file test.txt inside wc_command
+/wc_command/test.txt
