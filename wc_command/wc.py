@@ -20,28 +20,32 @@ def filename_from_args(args) -> str:
 
 def command_handler(args: argparse.Namespace):
     filename = filename_from_args(args)
-
     if args.file:
         args.c = filename
         args.l = filename
         args.w = filename
+        args.L = filename
+        
+    output = []
 
-    out = ""
     if args.c is not None:
-        out += f" {str(getsize(filename))}"
+        output.append(str(getsize(filename)))
+
     if args.l is not None:
         with open(args.l, "r", encoding="utf8") as f:
-            out += f" {len(f.readlines())}"
+            output.append(str(sum(1 for _ in f)))
+
     if args.w is not None:
         with open(args.w, "r", encoding="utf8") as f:
-            out += f" {len(f.read().split())}"
+            output.append(str(sum(1 for _ in f.read().split())))
+
     if args.L is not None:
         with open(args.L, "r", encoding="utf8") as f:
-            longest = max(f.readlines(), key=len)
-            out += f" {len(longest)}"
+            longest = max(f, key=len)
+            output.append(str(len(longest)))
 
-    out += f" {filename}"
-    print(out)
+    output.append(filename)
+    print(" ".join(output))
 
 
 def main():
